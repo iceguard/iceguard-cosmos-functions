@@ -29,7 +29,7 @@ public class Function {
             final ExecutionContext context) {
 
         // Parse query parameter
-        String deviceId = request.getQueryParameters().get("deviceId");
+        String deviceId = request.getQueryParameters().get(FIELD_DEVICE_ID);
         String fromDate = request.getQueryParameters().get("fromDate");
         String toDate = request.getQueryParameters().get("toDate");
         String userId = request.getQueryParameters().get("userId");
@@ -53,7 +53,6 @@ public class Function {
             @HttpTrigger(name = "req", methods = {HttpMethod.GET}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
 
-        // Parse query parameter
         String deviceIds = request.getQueryParameters().get("deviceIds");
 
         if (deviceIds == null) {
