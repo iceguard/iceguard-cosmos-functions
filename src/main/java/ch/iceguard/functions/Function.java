@@ -1,5 +1,6 @@
 package ch.iceguard.functions;
 
+import ch.iceguard.functions.model.Measurement;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;

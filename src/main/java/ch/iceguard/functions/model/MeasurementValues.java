@@ -1,42 +1,35 @@
-package ch.iceguard.functions;
+package ch.iceguard.functions.model;
 
-import org.bson.types.ObjectId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
-import java.util.Date;
+public class MeasurementValues {
 
-public class Measurement {
+    @BsonProperty("temperature")
+    public double temperature;
 
-    private ObjectId _id;
-    private String deviceId;
-    private int messageId;
-    private double temperature;
-    private double humidity;
-    private double acceleratorX;
-    private double acceleratorY;
-    private double acceleratorZ;
-    private double gyroscopeX;
-    private double gyroscopeY;
-    private double gyroscopeZ;
-    private Date timestamp;
+    @BsonProperty("humidity")
+    public double humidity;
 
-    public Measurement() {
+    @BsonProperty("acceleratorX")
+    public double acceleratorX;
 
-    }
+    @BsonProperty("acceleratorY")
+    public double acceleratorY;
 
-    public String getDeviceId() {
-        return deviceId;
-    }
+    @BsonProperty("acceleratorZ")
+    public double acceleratorZ;
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
+    @BsonProperty("gyroscopeX")
+    public double gyroscopeX;
 
-    public int getMessageId() {
-        return messageId;
-    }
+    @BsonProperty("gyroscopeY")
+    public double gyroscopeY;
 
-    public void setMessageId(int messageId) {
-        this.messageId = messageId;
+    @BsonProperty("gyroscopeZ")
+    public double gyroscopeZ;
+
+    public MeasurementValues() {
+        // for serializing purposes
     }
 
     public double getTemperature() {
@@ -53,14 +46,6 @@ public class Measurement {
 
     public void setHumidity(double humidity) {
         this.humidity = humidity;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
     }
 
     public double getAcceleratorX() {
@@ -110,12 +95,5 @@ public class Measurement {
     public void setGyroscopeZ(double gyroscopeZ) {
         this.gyroscopeZ = gyroscopeZ;
     }
-
-    public ObjectId get_id() {
-        return _id;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
-    }
 }
+

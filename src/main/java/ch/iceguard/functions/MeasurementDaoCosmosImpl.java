@@ -1,5 +1,6 @@
 package ch.iceguard.functions;
 
+import ch.iceguard.functions.model.Measurement;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
