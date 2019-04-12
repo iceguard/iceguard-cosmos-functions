@@ -1,5 +1,7 @@
 package ch.iceguard.functions;
 
+import ch.iceguard.functions.model.Measurement;
+
 import java.util.List;
 
 public interface MeasurementDao {
