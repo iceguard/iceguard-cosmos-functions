@@ -30,7 +30,9 @@ public class MeasurementDaoCosmosImpl implements MeasurementDao {
         List<Measurement> measurements = new ArrayList<>();
         try (MongoClient mongoClient = new MongoClient(new MongoClientURI(System.getenv(MONGO_DB_CONNECTION_STRING_PROPERTY)))) {
             MongoCollection<Document> collection = getMongoCollection(mongoClient);
-            deviceIds.forEach(device -> measurements.add(collection.find(eq(FIELD_DEVICE_ID, device), Measurement.class).sort(new Document("_id", -1)).first()));
+            deviceIds.forEach(device -> measurements.add(collection.find(eq(FIELD_DEVICE_ID, device), Measurement.class)
+                    .sort(new Document("_id", -1))
+                    .first()));
         }
         return measurements;
     }
@@ -41,7 +43,10 @@ public class MeasurementDaoCosmosImpl implements MeasurementDao {
 
         try (MongoClient mongoClient = new MongoClient(new MongoClientURI(MONGO_URL))) {
             MongoCollection<Document> collection = getMongoCollection(mongoClient);
-            measurements = collection.find(eq(FIELD_DEVICE_ID, deviceId), Measurement.class).limit(50).into(new ArrayList<>());
+            measurements = collection.find(eq(FIELD_DEVICE_ID, deviceId), Measurement.class)
+                    .sort(new Document("_id", -1))
+                    .limit(50)
+                    .into(new ArrayList<>());
         }
         return measurements;
     }
