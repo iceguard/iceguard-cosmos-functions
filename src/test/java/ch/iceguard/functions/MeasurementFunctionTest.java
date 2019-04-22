@@ -143,6 +143,31 @@ public class MeasurementFunctionTest {
     }
 
     @Test
+    public void testGetMeasurementsWithoutDevice() throws Exception {
+
+        @SuppressWarnings("unchecked")
+        final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
+        final Map<String, String> queryParams = new HashMap<>();
+        doReturn(queryParams).when(req).getQueryParameters();
+
+        final Optional<String> queryBody = Optional.empty();
+        doReturn(queryBody).when(req).getBody();
+        doAnswer((Answer<HttpResponseMessage.Builder>) invocation -> {
+            HttpStatus status = (HttpStatus) invocation.getArguments()[0];
+            return new HttpResponseMessageMock.HttpResponseMessageBuilderMock().status(status);
+        }).when(req).createResponseBuilder(any(HttpStatus.class));
+
+        final ExecutionContext context = mock(ExecutionContext.class);
+        doReturn(Logger.getGlobal()).when(context).getLogger();
+
+        // Invoke
+        final HttpResponseMessage ret = new Function().runMeasurements(req, context);
+
+        // Verify
+        assertThat(ret.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     public void testGetLatestMeasurementWithKnownDevice() throws Exception {
 
         @SuppressWarnings("unchecked")
@@ -174,6 +199,34 @@ public class MeasurementFunctionTest {
         assertThat(measurements).extracting("messageId").containsOnly(2);
         assertThat(measurements).extracting("measurementValues")
                 .extracting("temperature").contains(20.5);
+    }
+
+    @Test
+    public void testGetLatestMeasurementWithoutDevice() throws Exception {
+
+        @SuppressWarnings("unchecked")
+        final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
+        final Map<String, String> queryParams = new HashMap<>();
+        doReturn(queryParams).when(req).getQueryParameters();
+
+        final Optional<String> queryBody = Optional.empty();
+        doReturn(queryBody).when(req).getBody();
+        doAnswer((Answer<HttpResponseMessage.Builder>) invocation -> {
+            HttpStatus status = (HttpStatus) invocation.getArguments()[0];
+            return new HttpResponseMessageMock.HttpResponseMessageBuilderMock().status(status);
+        }).when(req).createResponseBuilder(any(HttpStatus.class));
+
+        final ExecutionContext context = mock(ExecutionContext.class);
+        doReturn(Logger.getGlobal()).when(context).getLogger();
+
+        collection.insertOne(getTestDeviceMeasurement(1));
+        collection.insertOne(getTestDeviceMeasurement(2));
+
+        // Invoke
+        final HttpResponseMessage ret = new Function().runLatestMeasurments(req, context);
+
+        // Verify
+        assertThat(ret.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     private static Measurement getTestDeviceMeasurement(int messageId) {
