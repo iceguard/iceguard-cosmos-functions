@@ -18,7 +18,6 @@ public class Function {
     static final String FIELD_DEVICE_ID = "deviceId";
     private static final String FIELD_DEVICE_IDS = "deviceIds";
     private static final int MAX_RESULTS = 50;
-    private MeasurementDao measurementDao = new MeasurementDaoCosmosImpl();
 
     @FunctionName("measurements")
     public HttpResponseMessage runMeasurements(
@@ -33,8 +32,9 @@ public class Function {
         }
 
         List<Measurement> measurements;
-        measurements = measurementDao.getLatestMeasurementsByDevice(deviceId, MAX_RESULTS);
-
+        CosmosService.init();
+        measurements = CosmosService.getLatestMeasurementsByDevice(deviceId, MAX_RESULTS);
+        CosmosService.close();
 
         return request.createResponseBuilder(HttpStatus.OK).body(measurements).build();
     }
@@ -52,7 +52,9 @@ public class Function {
 
         List<String> devices = Arrays.asList(deviceIds.split(","));
         List<Measurement> measurements;
-        measurements = measurementDao.getMostRecentMeasurements(devices);
+        CosmosService.init();
+        measurements = CosmosService.getMostRecentMeasurements(devices);
+        CosmosService.close();
 
         return request.createResponseBuilder(HttpStatus.OK).body(measurements).build();
     }
