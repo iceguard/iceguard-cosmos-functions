@@ -28,6 +28,9 @@ public class MeasurementValues {
     @BsonProperty("gyroscopeZ")
     public double gyroscopeZ;
 
+    @BsonProperty("steps")
+    public double steps;
+
     public MeasurementValues() {
         // for serializing purposes
     }
@@ -94,6 +97,14 @@ public class MeasurementValues {
 
     public void setGyroscopeZ(double gyroscopeZ) {
         this.gyroscopeZ = gyroscopeZ;
+    }
+
+    public double getSteps() {
+        return steps;
+    }
+
+    public void setSteps(double steps) {
+        this.steps = steps;
     }
 }
 
