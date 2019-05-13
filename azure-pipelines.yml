@@ -21,16 +21,14 @@ steps:
       codeCoverageTool: 'jaCoCo'
       testResultsFormat: 'JUnit'
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      summaryFileLocation: '**/site/jacoco/jacoco.xml'
-      goals: 'package'
+      goals: '-B package'
   - bash: |
-      mvn sonar:sonar \
+      mvn -B sonar:sonar \
         -Dsonar.projectKey=iceguard_iceguard-cosmos-functions \
         -Dsonar.organization=iceguard \
         -Dsonar.projectName=iceguard-cosmos-functions \
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.junit.reportPaths=target/surefire-reports \
-        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
         -Dsonar.login=$SONARCUBE_LOGIN_COSMOS_FUNCTIONS
   - task: CopyFiles@2
     displayName: 'Copy Files to: Artifact staging'
